@@ -1,0 +1,27 @@
+.parent_container{
+    position:absolute;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    height:100%;
+    width:100%;
+    background-color: black;
+  
+}
+
+.title{
+    color: silver;
+    font-size: 7vw;
+    text-align: center;
+    margin-top: 25vh;
+}
+
+.signup_login{
+    margin-top: 10vh;
+    text-align: center;
+}
+
+Button.signup_login{
+   color:  red;
+}

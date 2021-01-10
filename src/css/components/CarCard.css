@@ -1,0 +1,12 @@
+.green {
+    color: seagreen;
+    font-size: 40px;
+}
+
+.red {
+    color: red;
+}
+
+.unavailable{
+    color: slategrey;
+}
