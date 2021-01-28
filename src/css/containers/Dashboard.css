@@ -10,12 +10,20 @@
 }
 
 .user_welcome{
-    font-size: 4vw;
     text-align: center;
+}
+
+.user_welcome_text{
+    font-size: 4vw;    
     margin-top: 5vh;
+    margin-bottom: 3vh;
 }
 
 .car_card_container{
     width: '22rem';
     height: 220px
+}
+
+.car_list {
+    text-align: center ;
 }
