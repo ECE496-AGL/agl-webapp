@@ -1,16 +1,19 @@
 .parent_container_dashboard{
-    position:absolute;
+    margin-top: -40px;
+    /* position:absolute;
     top:0;
     left:0;
     bottom:0;
     right:0;
     height:100%;
-    width:100%;
+    width:100%; */
     background-color: rgb(204, 210, 216);
+    
 }
 
 .user_welcome{
     text-align: center;
+    align-items: center;
 }
 
 .user_welcome_text{
@@ -19,11 +22,35 @@
     margin-bottom: 3vh;
 }
 
+.logout_btn{
+    margin-bottom: 10px;
+}
+
 .car_card_container{
     width: '22rem';
-    height: 220px
+    height: 220px;
+    background-color: rgb(204, 210, 216);
+
 }
 
 .car_list {
     text-align: center ;
+}
+
+.add_car_btn{
+    margin-bottom: 20px;
+}
+
+.add_car_div {
+    
+    width: 400px;
+    max-width: 600px;
+    height: auto;
+    margin: 0 auto;
+    padding: 10px;
+    position: relative;
+    
+    /* align-items: center; 
+    border: 2px solid crimson;*/
+
 }
