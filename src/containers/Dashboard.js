@@ -9,7 +9,7 @@ import { Container,
     Form } from 'react-bootstrap';
 import { Component } from 'react';
 import { render } from '@testing-library/react';
-
+import Auth from '@aws-amplify/auth';
 
 
 
@@ -42,20 +42,43 @@ class Dashboard extends React.Component {
 
     
     
-    // componentDidMount() {
-    //     const api = "https://5em82k1ie2.execute-api.us-east-1.amazonaws.com/"
+    componentDidMount() {
+        const api = "https://jmz2acpxgh.execute-api.us-east-1.amazonaws.com/prod/user/get-cognito-id"
 
 
-    //     axios.post(api, {
-    //         cognitoID : "7cc4b372-4e30-472a-98ff-62707040d02f"
-    //       })
-    //       .then(function (response) {
-    //         console.log(response);
-    //       })
-    //       .catch(function (error) {
-    //         console.log(error);
-    //       });
-    // }
+        Auth.currentAuthenticatedUser().then((user) => {
+          console.log('Current user email = ' + user.attributes.email);
+          console.log(user.attributes)
+          console.log(user)
+        });
+
+        // axios.post(api, {
+        //     cognitoID : "ceb72e1c-e0e1-42dc-8603-9f838005367b"
+        //   })
+        //   .then( (response) => {
+        //     console.log(response);
+        //   })
+        //   .catch( (error) => {
+        //     console.log(error);
+        //   });
+    
+        
+        //Get user's cognitoID
+        axios.post(api, {
+          email : "siddharth.vijay@mail.utoronto.ca"
+        })
+        .then( (response) => {
+          console.log(response);
+        })
+        .catch( (error) => {
+          console.log(error);
+        });
+
+        //Get user's data
+
+        
+    
+     }
     
     updateCarID(e){
       this.setState({newCarID : e.target.value})
