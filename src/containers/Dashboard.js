@@ -10,8 +10,8 @@ import { Container,
 import { Component } from 'react';
 import { render } from '@testing-library/react';
 import Auth from '@aws-amplify/auth';
-
-
+import {CognitoAuth} from 'amazon-cognito-auth-js';
+import AWS from 'aws-sdk';
 
 
 class Dashboard extends React.Component {
@@ -19,6 +19,9 @@ class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            currentUserEmail: "siddharth.vijay@mail.utoronto.ca",
+            currentUserName: "",
+            currentUserCognitoId: "",
             newCarID: "",
             newCarName: "",
             x: "John",
@@ -43,40 +46,53 @@ class Dashboard extends React.Component {
     
     
     componentDidMount() {
-        const api = "https://jmz2acpxgh.execute-api.us-east-1.amazonaws.com/prod/user/get-cognito-id"
+        
 
 
-        Auth.currentAuthenticatedUser().then((user) => {
-          console.log('Current user email = ' + user.attributes.email);
-          console.log(user.attributes)
-          console.log(user)
+        // Auth.currentAuthenticatedUser().then((user) => {
+        //   console.log('Current user email = ' + user.attributes.email);
+        //   console.log(user.attributes)
+        //   console.log(user)
+        // });
+
+        //AWS.config.credentials = new AWS.CognitoIdentityCredentials({IdentityPoolId:'6udbap9k9c743qirm1g4flp595'})
+        
+        AWS.config.update({
+          credentials: new AWS.CognitoIdentityCredentials({
+              IdentityPoolId: '6udbap9k9c743qirm1g4flp595',
+          }),
+          region: 'us-east-1'
         });
 
-        // axios.post(api, {
-        //     cognitoID : "ceb72e1c-e0e1-42dc-8603-9f838005367b"
-        //   })
-        //   .then( (response) => {
-        //     console.log(response);
-        //   })
-        //   .catch( (error) => {
-        //     console.log(error);
-        //   });
-    
-        
+        let api = "https://jmz2acpxgh.execute-api.us-east-1.amazonaws.com/prod/user/get-cognito-id"
+
         //Get user's cognitoID
         axios.post(api, {
           email : "siddharth.vijay@mail.utoronto.ca"
         })
         .then( (response) => {
           console.log(response);
+          console.log(`the cognitoID is ${response.data.CognitoID}`)
+          this.setState({currentUserCognitoId: response.data.CognitoID})
         })
         .catch( (error) => {
           console.log(error);
         });
 
         //Get user's data
-
+        api = 'https://jmz2acpxgh.execute-api.us-east-1.amazonaws.com/prod/user/get-info'
         
+        axios.post(api, {
+           CognitoID : this.state.currentUserCognitoId
+        })
+        .then( (response) => {
+          console.log(response);
+          //this.setState({currentUserCognitoId: response.data.CognitoID})
+        })
+        .catch( (error) => {
+          console.log(error);
+        });
+
     
      }
     
@@ -117,6 +133,8 @@ class Dashboard extends React.Component {
           <div className="user_welcome">
             <h4 className="user_welcome_text">Welcome, Siddharth Vijay</h4>
             
+            <h5 className="user_welcome_texat">CognitoID: {this.state.currentUserCognitoId}</h5>
+            <br/>
             {/* Note: logout_uri needs to be EXACT SAME as the signout url in cognito console */}
             <Button 
             className="logout_btn"
